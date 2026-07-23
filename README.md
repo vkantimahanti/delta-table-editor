@@ -20,6 +20,36 @@
 
 ![Delta Table Editor approvals](documentation/images/approvals.png)
 
+### Feature walkthrough
+
+<details>
+<summary><strong>Editable data grid</strong></summary>
+
+![Editable Delta table grid with sample data](documentation/images/editable-grid.png)
+
+</details>
+
+<details>
+<summary><strong>Upload and upsert data</strong></summary>
+
+![Upload and upsert workflow](documentation/images/upload-data.png)
+
+</details>
+
+<details>
+<summary><strong>Export data</strong></summary>
+
+![CSV, Excel, and TSV export options](documentation/images/export-data.png)
+
+</details>
+
+<details>
+<summary><strong>Audit history</strong></summary>
+
+![Column-level change history](documentation/images/history.png)
+
+</details>
+
 ---
 
 ## Why this exists
