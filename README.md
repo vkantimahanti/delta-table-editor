@@ -6,6 +6,22 @@
 
 ---
 
+## Screenshots
+
+### Overview
+
+![Delta Table Editor overview](documentation/images/overview.png)
+
+### Data editor
+
+![Delta Table Editor workspace](documentation/images/data-editor.png)
+
+### Approval workflow
+
+![Delta Table Editor approvals](documentation/images/approvals.png)
+
+---
+
 ## Why this exists
 
 Data teams spend hours writing SQL patch scripts and processing Excel correction files from
