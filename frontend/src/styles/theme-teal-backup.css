@@ -1,0 +1,25 @@
+/**
+ * REVERT REFERENCE — navy-teal theme (before enterprise palette).
+ * To restore: copy :root tokens back into global.css and revert
+ * TopNav.module.css + TabBar.module.css from git, or ask agent to "revert colors".
+ */
+:root {
+  --nav-bg:      #0a2e2e;
+  --nav-border:  #061f1f;
+  --nav-hover:   #0f4040;
+  --nav-text:    #f0fdfa;
+  --nav-muted:   #94a3b8;
+  --nav-accent:  #2dd4bf;
+  --canvas:      #eef1f6;
+  --tab-bg:        #0a2e2e;
+  --tab-border:    #061f1f;
+  --tab-active-bg: #134e4a;
+  --tab-active-fg: #2dd4bf;
+  --tab-inactive-fg: #94a3b8;
+  --tab-hover:     rgba(255, 255, 255, 0.06);
+  --abar-bg:     #134e4a;
+  --abar-border: #0f3d39;
+  --table-head-bg:     #007892;
+  --table-head-text:   #ffffff;
+  --table-head-border: #006775;
+}

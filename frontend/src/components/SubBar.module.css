@@ -1,0 +1,49 @@
+.bar {
+  display: flex;
+  align-items: center;
+  padding: 6px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  min-height: 36px;
+  gap: 8px;
+}
+.left {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 3px 9px;
+  font-size: 11px;
+  color: var(--text-2);
+}
+.pill svg { color: var(--text-3); flex-shrink: 0; }
+.pill strong { color: var(--text-1); font-weight: 500; }
+.filterChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--blue-light);
+  border: 1px solid #c7d7fb;
+  border-radius: 99px;
+  padding: 2px 8px;
+  font-size: 11px;
+  color: var(--blue-text);
+}
+.filterChip button {
+  background: none;
+  border: none;
+  color: #8aaef5;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin-left: 2px;
+}
+.filterChip button:hover { color: var(--blue-text); }

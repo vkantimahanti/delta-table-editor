@@ -1,0 +1,44 @@
+# Environment
+.env
+*.env.local
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Node
+node_modules/
+frontend/node_modules/
+agent-builder/node_modules/
+
+# Build output (commit static/ only if deploying from repo)
+# Uncomment if you build locally and commit:
+# !static/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Databricks
+.databricks/
+
+# Logs
+*.log
+logs/
+
+# Staging / temp files
+*.stage
+*.tmp

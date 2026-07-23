@@ -1,0 +1,96 @@
+command:
+  - bash
+  - startup.sh
+
+# ============================================================
+# Delta Table Editor — Databricks Apps configuration
+# ============================================================
+# Before deploying:
+#   1. Replace 'your_catalog' with your Unity Catalog name.
+#   2. Replace 'your_schema' with your target schema.
+#   3. Bind a SQL Warehouse in Databricks Apps UI:
+#      Apps → Settings → Resources → key = "sql-warehouse"
+# ============================================================
+
+env:
+  # ── Unity Catalog ───────────────────────────────────────
+  # The catalog where dataeditor_* config tables live.
+  - name: TARGET_CATALOG
+    value: your_catalog
+
+  # SQL Warehouse ID — injected from the resource binding.
+  - name: DATABRICKS_WAREHOUSE_ID
+    valueFrom: sql-warehouse
+
+  # ── App identity ────────────────────────────────────────
+  - name: APP_VERSION
+    value: "1.0.0"
+
+  # ── Timeouts ────────────────────────────────────────────
+  # 300s matches Classic SQL Warehouse cold start (3-5 min).
+  # Reduce to 60 if using Serverless SQL.
+  - name: REQUEST_TIMEOUT_SECONDS
+    value: "300"
+
+  # ── Upload limits ────────────────────────────────────────
+  # Maximum CSV/Excel upload size in megabytes.
+  # 10MB ≈ 50,000 typical rows.
+  - name: MAX_UPLOAD_MB
+    value: "10"
+
+  # ── Row limits ───────────────────────────────────────────
+  # Default rows returned per data fetch (no filter active).
+  - name: MAX_ROWS_DEFAULT
+    value: "500"
+
+  # Hard ceiling per request.
+  # Medium instance (6 GB RAM): 40 concurrent × 10,000 rows × 50 bytes = 400 MB peak.
+  # Increase to 20,000 on Large instance.
+  - name: MAX_ROWS_LIMIT
+    value: "10000"
+
+  # ── UC Volume paths ──────────────────────────────────────
+  # Admin must create these volumes before first use.
+  # App works read-only if volumes are absent.
+  - name: STAGING_VOLUME_PATH
+    value: "/Volumes/your_catalog/your_schema/dataeditor_staging"
+
+  - name: EXPORT_VOLUME_PATH
+    value: "/Volumes/your_catalog/your_schema/dataeditor_exports"
+
+  - name: STAGING_SCHEMA
+    value: "your_schema"
+
+  # ── Bulk operation limits ────────────────────────────────
+  - name: BULK_UPDATE_MAX_ROWS
+    value: "10000"
+
+  - name: EXPORT_MAX_ROWS
+    value: "10000"
+
+  - name: EXPORT_BATCH_SIZE
+    value: "500"
+
+  # ── Approval emails ──────────────────────────────────────
+  # Base URL used in approval notification links.
+  # Set to your Databricks App URL in production.
+  - name: APP_BASE_URL
+    value: ""
+
+  # ── Worker count ─────────────────────────────────────────
+  # startup.sh auto-detects from DATABRICKS_APP_NAME.
+  # Uncomment to override:
+  # - name: WEB_CONCURRENCY
+  #   value: "4"
+
+  # ── Idle auto-stop ───────────────────────────────────────
+  # Stops the app after N minutes of no /api/* traffic.
+  # Reduces compute cost during off-hours.
+  - name: IDLE_AUTO_STOP
+    value: "true"
+
+  - name: IDLE_STOP_MINUTES
+    value: "10"
+
+  - name: IDLE_CHECK_SECONDS
+    value: "60"

@@ -1,0 +1,104 @@
+/* ── Design tokens ─────────────────────────────────────────────────────────── */
+:root {
+  /* Startup screen */
+  --bg-dark:       #0f2a2a;
+  --accent-bright: #2dd4bf;
+  --text-on-dark:  #f0fdfa;
+  --text-muted:    #94a3b8;
+
+  /* Navigation bar — dark brand strip only */
+  --nav-bg:      #0f2a2a;
+  --nav-border:  #0a1e1e;
+  --nav-hover:   #1a3a3a;
+  --nav-text:    #f0fdfa;
+  --nav-muted:   #94a3b8;
+  --nav-accent:  #2dd4bf;
+
+  /* Tab strip — light */
+  --tab-bg:              #ffffff;
+  --tab-border:          #e2e8f0;
+  --tab-active-color:    #0f766e;
+  --tab-active-line:     #0f766e;
+  --tab-inactive-color:  #64748b;
+  /* legacy aliases */
+  --tab-active-fg:       #0f766e;
+  --tab-inactive-fg:     #64748b;
+  --tab-hover:           #f8fafc;
+
+  /* Action bar — light */
+  --action-bg:     #f8fafc;
+  --action-border: #e2e8f0;
+  --action-text:   #1e293b;
+  /* legacy aliases */
+  --abar-bg:       #f8fafc;
+  --abar-border:   #e2e8f0;
+
+  /* Page & surfaces */
+  --sidebar-bg:  #f8fafc;
+  --canvas-bg:   #f8fafc;
+  --canvas:      #f1f5f9;
+  --surface:     #ffffff;
+  --surface-2:   #f8fafc;
+  --border:      #e2e8f0;
+  --border-2:    #d1d5db;
+
+  --text-1:      #000000;
+  --text-2:      #1a1a1a;
+  --text-3:      #4a4a4a;
+
+  /* Table & focus */
+  --table-head-bg:     #ffffff;
+  --table-head-text:   #000000;
+  --table-head-border: #e2e8f0;
+  --table-head-muted:  #525252;
+  --focus-ring:        #0f766e;
+  --focus-bg:          #ecfdf5;
+  --row-hover:         #f8fafc;
+  --row-selected:      #ecfdf5;
+  --row-changed:       #fffbeb;
+  --row-new:           #ecfdf5;
+
+  /* Semantic */
+  --blue:        #3b6de0;
+  --blue-hover:  #2f58c4;
+  --blue-light:  #e8efff;
+  --blue-text:   #2a4fad;
+  --green:       #0f766e;
+  --green-light: #ecfdf5;
+  --green-text:  #0f766e;
+  --amber:       #c97a12;
+  --amber-light: #fef6e6;
+  --red:         #d63b3b;
+  --red-light:   #fdecec;
+  --red-text:    #b42323;
+
+  --radius-sm:  4px;
+  --radius:     6px;
+  --radius-lg:  10px;
+  --shadow-sm:  0 1px 2px rgba(0,0,0,.06);
+  --shadow:     0 2px 8px rgba(0,0,0,.08);
+  --font:       Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono:  ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body, #root { height: 100%; }
+body {
+  font-family: var(--font);
+  font-size: 13px;
+  background: var(--canvas-bg);
+  color: var(--text-1);
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+
+/* ── Scrollbar ─────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
+
+/* ── Utility ───────────────────────────────────────────────────────────────── */
+.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }

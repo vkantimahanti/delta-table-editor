@@ -1,0 +1,13 @@
+# Paste sample for sample_entity (Data tab → Paste rows)
+# Copy the data lines below (skip lines starting with #).
+#
+# Column order — 11 values per line:
+# record_id, name, entity_type, region_code, status, contract_value,
+# effective_date, term_date, notes, contact_email, is_active
+#
+# Quoting examples:
+#   Commas in notes:  "Primary example, tier 1"
+#   Double quotes:    "Say ""hello"""  →  Say "hello"
+
+ENTITY_011,Paste Test One,TYPE_A,REGION_NORTH,ACTIVE,100000,2025-01-01,2026-12-31,"Pasted row one, with comma",contact@paste-one.com,true
+ENTITY_012,Paste Test Two,TYPE_B,REGION_EAST,PENDING,250000,2025-02-01,2027-02-01,"Second pasted row example",contact@paste-two.com,true

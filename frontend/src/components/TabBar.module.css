@@ -1,0 +1,300 @@
+/* ── Unified ribbon panel (tabs + actions) ─────────────────────────────────── */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 50;
+  overflow: visible;
+  background: #ffffff;
+}
+
+/* ── Level 1: tab row ──────────────────────────────────────────────────────── */
+.tabRow {
+  display: flex;
+  align-items: flex-end;
+  padding: 0 24px;
+  background: #ffffff;
+  border: none;
+  border-bottom: 1px solid #e2e8f0;
+  gap: 4px;
+  height: 44px;
+  min-height: 44px;
+  overflow: visible;
+  box-shadow: none;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: #333333;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.12s, background 0.12s, border-color 0.12s;
+  white-space: nowrap;
+  margin-bottom: -1px;
+  box-shadow: none;
+}
+.tab:hover {
+  background: #f8fafc;
+  color: #000000;
+  border-bottom-color: transparent;
+}
+
+.tabActive {
+  background: transparent !important;
+  color: #000000 !important;
+  font-weight: 700;
+  font-size: 13px;
+  border: none !important;
+  border-bottom: 3px solid #0f766e !important;
+  box-shadow: none !important;
+  z-index: 1;
+}
+
+.tabConnector {
+  display: none;
+}
+
+/* ── Level 2: action bar ───────────────────────────────────────────────────── */
+.actionBar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 24px;
+  background: #ffffff;
+  border: none;
+  border-bottom: 1px solid #e2e8f0;
+  min-height: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  box-shadow: none;
+}
+
+.tabContext {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #000000;
+  flex-shrink: 0;
+}
+
+.actionDivider {
+  width: 1px;
+  height: 18px;
+  background: #e2e8f0;
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+.actionSpacer { flex: 1; }
+
+/* Action buttons */
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: background 0.1s, color 0.1s, border-color 0.1s, opacity 0.1s;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* Primary — Add */
+.btnAdd {
+  background: #0f766e;
+  border: 1px solid #0f766e;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 6px 14px;
+}
+.btnAdd:hover:not(:disabled) {
+  background: #0d6b63;
+  border-color: #0d6b63;
+}
+
+/* Secondary — Update, Delete, Paste, Cancel */
+.btnUpdate,
+.btnDelete {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #000000;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-weight: 500;
+}
+.btnPaste,
+.btnCancel {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #000000;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-weight: 500;
+}
+.btnUpdate:hover:not(:disabled),
+.btnDelete:hover:not(:disabled),
+.btnPaste:hover:not(:disabled),
+.btnCancel:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+.btnUpdate:disabled,
+.btnDelete:disabled {
+  background: #ffffff;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Primary — Review & Save */
+.btnSave {
+  background: #0f766e;
+  color: #ffffff;
+  font-weight: 600;
+  border: 1px solid #0f766e;
+  border-radius: 6px;
+  padding: 6px 16px;
+}
+.btnSave:hover:not(:disabled) {
+  background: #0d6b63;
+  border-color: #0d6b63;
+  color: #ffffff;
+}
+.btnSave:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.actionBtn:disabled {
+  cursor: not-allowed;
+}
+
+/* Action bar form controls */
+.actionLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #334155;
+  margin-left: 2px;
+  flex-shrink: 0;
+  text-shadow: none;
+}
+.actionSelect {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  box-shadow: none;
+}
+.actionSelect option {
+  background: #ffffff;
+  color: #334155;
+}
+.actionSelect:focus {
+  border-color: #0f766e;
+  box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.2);
+}
+
+.actionCheck {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  flex-shrink: 0;
+  text-shadow: none;
+  user-select: none;
+}
+.actionCheck input {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  accent-color: #0f766e;
+}
+
+/* Export — tab strip, right-aligned */
+.exportWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  align-self: center;
+  margin-left: auto;
+  margin-right: 16px;
+  overflow: visible;
+}
+.exportBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.1s, border-color 0.1s;
+  box-shadow: none;
+}
+.exportBtn:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+.exportBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.exportMenu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-lg);
+  min-width: 180px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  z-index: 300;
+}
+.exportItem {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 14px;
+  font-size: 12px;
+  color: #0f172a;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+.exportItem:hover { background: #f8fafc; color: #0f766e; }
+.exportItem svg { color: #94a3b8; }

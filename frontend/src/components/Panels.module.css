@@ -1,0 +1,532 @@
+/* ── Shared buttons ──────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  border-radius: var(--radius); padding: 7px 14px;
+  font-size: 12px; font-weight: 500; cursor: pointer;
+  border: 1px solid transparent; transition: background .12s;
+}
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btnPrimary  { background: var(--blue); color: #fff; border-color: var(--blue); }
+.btnPrimary:hover:not(:disabled)  { background: var(--blue-hover); }
+.btnOutline  { background: var(--surface); color: var(--text-1); border-color: var(--border-2); }
+.btnOutline:hover:not(:disabled)  { background: var(--surface-2); }
+.btnSecondary { background: var(--surface); color: var(--text-1); border-color: var(--border-2); }
+.btnSecondary:hover:not(:disabled) { background: var(--surface-2); }
+
+/* ── Alerts ──────────────────────────────────────────────────────────────── */
+.alert {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 14px; border-radius: var(--radius); font-size: 12px;
+}
+.alert svg { flex-shrink: 0; margin-top: 1px; }
+.alert ul { margin: 4px 0 0 16px; }
+.alertError { background: var(--red-light);   color: var(--red-text);  border: 1px solid #fecaca; }
+.alertWarn  { background: var(--amber-light); color: #92400e;          border: 1px solid #fde68a; }
+.alertInfo  { background: var(--blue-light);  color: var(--blue-text); border: 1px solid #bfdbfe; }
+
+/* ── Paste panel ─────────────────────────────────────────────────────────── */
+.pasteZone {
+  background: var(--amber-light); border: 1px dashed #e0b45a;
+  border-radius: var(--radius-lg); padding: 12px 16px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.pasteInfo { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #8a5a0f; }
+.pasteHint {
+  font-size: 11px;
+  color: #7a6520;
+  margin-top: -2px;
+}
+.pasteIcon { flex-shrink: 0; color: var(--amber); }
+.pasteBody { display: flex; align-items: flex-start; gap: 10px; }
+.pasteArea {
+  flex: 1; border: 1px solid #e8c878; border-radius: var(--radius);
+  padding: 8px 10px; font-size: 11px; font-family: var(--font-mono);
+  resize: vertical; background: var(--surface); color: var(--text-1); outline: none;
+}
+.pasteArea:focus { border-color: var(--amber); }
+.pasteBtns { display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
+
+/* ── Review panel ────────────────────────────────────────────────────────── */
+.reviewPanel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); overflow: hidden;
+  display: flex; flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+.reviewHead {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--surface-2);
+  flex-shrink: 0;
+}
+.reviewTitle { font-size: 13px; font-weight: 500; color: var(--text-1); }
+.reviewCmpWrap {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+.reviewCmpWrap .histCmpList { padding: 12px; }
+.reviewFoot {
+  display: flex; justify-content: flex-end; gap: 8px;
+  padding: 10px 16px; border-top: 1px solid var(--border); background: var(--surface-2);
+  flex-shrink: 0;
+}
+
+/* ── Error block (reason + fix) ──────────────────────────────────────────── */
+.errorList  { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.errorBlock {
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 8px 10px;
+  background: rgba(255,255,255,.6);
+  border-radius: var(--radius-sm, var(--radius));
+  border-left: 3px solid var(--red);
+}
+.errorCol    { font-size: 10px; font-weight: 700; text-transform: uppercase;
+               letter-spacing: .05em; color: var(--text-3); }
+.errorReason { font-size: 12px; font-weight: 600; color: var(--red-text); }
+.errorFix    { font-size: 11px; color: var(--blue-text); margin-top: 1px; }
+
+/* ── Upload panel ────────────────────────────────────────────────────────── */
+.uploadPanel {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.uploadHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.uploadTitle { font-size: 15px; font-weight: 600; color: var(--text-1); margin: 0; }
+.uploadSubtitle { font-size: 12px; color: var(--text-3); margin: 4px 0 0; }
+.uploadSection { display: flex; flex-direction: column; gap: 8px; }
+.uploadStepLabel {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-3);
+}
+.uploadSettingsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+.uploadSetting {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+.uploadSetting select {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px 8px;
+  font-size: 12px;
+  background: var(--surface);
+}
+.uploadCheck {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 6px;
+}
+.uploadPreviewWrap {
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  max-height: 200px;
+}
+.uploadPreviewTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.uploadPreviewTable th,
+.uploadPreviewTable td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  white-space: nowrap;
+}
+.uploadPreviewTable th {
+  background: var(--surface-2);
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+}
+.uploadActions {
+  display: flex;
+  gap: 8px;
+  padding-top: 4px;
+}
+.summaryList {
+  margin: 6px 0 0 16px;
+  padding: 0;
+  font-size: 11px;
+}
+.errorListCompact {
+  margin: 6px 0 0 16px;
+  padding: 0;
+  font-size: 11px;
+}
+.overwriteConfirm {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+  font-size: 11px;
+}
+.overwriteConfirm input {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px 8px;
+  font-size: 12px;
+}
+.uploadCard {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 20px;
+  display: flex; flex-direction: column; gap: 14px; max-width: 600px;
+}
+.uploadField { display: flex; flex-direction: column; gap: 5px; }
+.fieldLabel { font-size: 11px; font-weight: 600; color: var(--text-2); }
+.fieldHint { font-size: 11px; color: var(--text-3); }
+.fieldInput {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 7px 10px; font-size: 12px; background: var(--surface-2); color: var(--text-2);
+}
+.fileInput { font-size: 12px; }
+.modeCards { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; }
+.modeCard {
+  display: flex; align-items: flex-start; gap: 10px;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 9px 12px; cursor: pointer; transition: border-color .1s;
+}
+.modeCard strong { font-size: 12px; font-weight: 500; display: block; margin-bottom: 2px; }
+.modeCard span { font-size: 11px; color: var(--text-2); }
+.modeCardActive { border-color: var(--focus-ring); background: var(--focus-bg); }
+.csvPreview {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 8px 10px; font-size: 11px; font-family: var(--font-mono);
+  background: var(--surface-2); color: var(--text-2);
+  resize: none; width: 100%; height: 100px;
+}
+.uploadStatus { font-size: 12px; color: var(--green); font-weight: 500; }
+
+/* ── History panel ───────────────────────────────────────────────────────── */
+.histPanel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.histSubTabs {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.histSubTab {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text-2);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .12s, color .12s, border-color .12s;
+}
+.histSubTab:hover { background: var(--surface-2); color: var(--text-1); }
+.histSubTabActive {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+.histSubTabActive:hover { background: var(--blue-hover); color: #fff; }
+.histWrap {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); overflow: auto;
+  flex: 1;
+  min-height: 0;
+}
+.histTable { width: max-content; min-width: 100%; border-collapse: collapse; font-size: 12px; }
+.histTable thead tr { background: var(--table-head-bg); }
+.histTable th {
+  padding: 9px 12px; text-align: left; font-size: 11px;
+  font-weight: 600; color: var(--table-head-text); white-space: nowrap;
+}
+.histTable td { padding: 0; border-bottom: 1px solid var(--border); }
+.histTable td > * { display: block; padding: 7px 12px; }
+.histDate  { color: var(--text-2); white-space: nowrap; font-size: 11px; }
+.histPk    { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); }
+.histOld   { color: var(--red); text-decoration: line-through; font-size: 11px; }
+.histNew   { color: var(--green); font-weight: 500; font-size: 11px; }
+.histSource { color: var(--text-3); font-size: 11px; }
+.emptyHistory { padding: 40px; text-align: center; color: var(--text-3); font-size: 13px; }
+
+/* ── History comparison ──────────────────────────────────────────────────── */
+.histCmpList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+}
+.histCmpCard {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+}
+.histCmpMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 12px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text-2);
+}
+.histCmpMetaDate { font-weight: 600; color: var(--text-1); }
+.histCmpMetaSep { color: var(--text-3); }
+.histCmpMetaSource { color: var(--text-3); }
+.histCmpBlock { padding: 10px 12px 0; }
+.histCmpBlock:last-child { padding-bottom: 12px; }
+.histCmpLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.histCmpLabelPrev { color: var(--red-text); }
+.histCmpLabelCurr { color: var(--green-text); }
+.histCmpScroll { overflow-x: auto; }
+.histCmpTable {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.histCmpTable thead tr { background: var(--table-head-bg); }
+.histCmpTable th {
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--table-head-text);
+  white-space: nowrap;
+}
+.histCmpTable td {
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.histCmpPk {
+  font-family: var(--font-mono);
+  color: var(--text-2);
+}
+.histCmpCellOld {
+  background: var(--red-light);
+  color: var(--red-text);
+  text-decoration: line-through;
+}
+.histCmpCellNew {
+  background: var(--green-light);
+  color: var(--green-text);
+  font-weight: 500;
+}
+
+.approvalDiffWrap { display: flex; flex-direction: column; gap: 10px; }
+.approvalDiffSummary {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 8px 12px; font-size: 12px; color: var(--text-2);
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.approvalDiffPaging { font-size: 11px; color: var(--text-3); }
+.approvalDiffPageBtn {
+  background: none; border: none; padding: 0; font-size: 11px; color: var(--blue);
+  cursor: pointer; text-decoration: underline;
+}
+.approvalDiffPageBtn:disabled { opacity: .4; cursor: not-allowed; text-decoration: none; }
+.approvalOpBadge {
+  margin-left: 8px; padding: 1px 6px; border-radius: 999px; font-size: 10px; font-weight: 600;
+  background: var(--green-light); color: var(--green-text);
+}
+.approvalOpBadgeMuted {
+  margin-left: 8px; padding: 1px 6px; border-radius: 999px; font-size: 10px;
+  background: var(--surface-2); color: var(--text-3); border: 1px solid var(--border);
+}
+
+.approvalInboxToolbar {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+  margin-bottom: 12px; padding: 10px 12px; background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: var(--radius);
+}
+.approvalFilterLabel {
+  display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-2);
+}
+.approvalFilterLabel select {
+  min-width: 220px; padding: 6px 8px; border-radius: var(--radius);
+  border: 1px solid var(--border-2); background: var(--surface); color: var(--text-1);
+}
+.approvalInboxCount { font-size: 12px; color: var(--text-3); }
+.approvalInboxPager {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  margin-top: 12px; font-size: 12px; color: var(--text-2);
+}
+.approvalCardHead {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  margin-bottom: 8px;
+}
+.approvalCardTitle { font-size: 14px; font-weight: 600; color: var(--text-1); }
+.approvalCardSub { font-size: 12px; color: var(--text-3); margin-top: 4px; }
+.approvalCardMetaSep { margin: 0 6px; color: var(--text-3); }
+.approvalDetailsToggle {
+  background: none; border: none; color: var(--blue); font-size: 11px; cursor: pointer;
+  text-decoration: underline; padding: 0; flex-shrink: 0;
+}
+.approvalTechnical {
+  font-size: 11px; color: var(--text-3); font-family: var(--font-mono);
+  margin-bottom: 8px; word-break: break-all;
+}
+.approvalSqlWrap { display: flex; flex-direction: column; gap: 12px; }
+.approvalSqlIntro { font-size: 12px; color: var(--text-2); margin: 0; }
+.approvalSqlBlock {
+  border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+  background: var(--surface);
+}
+.approvalSqlHead {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  padding: 10px 12px; background: var(--surface-2); border-bottom: 1px solid var(--border);
+}
+.approvalSqlActions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+.approvalSqlDesc { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+.approvalSqlPre {
+  margin: 0; padding: 12px; font-size: 11px; line-height: 1.45;
+  font-family: var(--font-mono); white-space: pre-wrap; word-break: break-word;
+  overflow-x: auto; max-height: 280px;
+}
+
+/* ── Export confirm dialog ───────────────────────────────────────────────── */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 42, 42, 0.45);
+  padding: 16px;
+}
+.modalDialog {
+  width: min(100%, 440px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 40px rgba(15, 42, 42, 0.18);
+  padding: 20px 22px;
+}
+.modalTitle {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+.modalBody {
+  margin: 0 0 18px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* ── Export panel ─────────────────────────────────────────────────────────── */
+.exportPanel {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 720px;
+}
+.exportHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  color: var(--green);
+}
+.exportTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin-bottom: 4px;
+}
+.exportSub {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+.exportMeta {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--text-3);
+}
+.exportCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.exportCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+  text-align: left;
+  transition: border-color 0.12s, background 0.12s;
+}
+.exportCard:hover:not(:disabled) {
+  border-color: var(--green);
+  background: var(--green-light);
+}
+.exportCard strong {
+  font-size: 14px;
+  color: var(--text-1);
+}
+.exportCard span {
+  font-size: 11px;
+  color: var(--text-3);
+}
+.exportCard svg {
+  color: var(--green);
+}
+.exportCard:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

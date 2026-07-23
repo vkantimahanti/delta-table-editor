@@ -1,0 +1,6 @@
+record_id,name,entity_type,region_code,status,contract_value,effective_date,term_date,notes,contact_email,is_active
+ENTITY_001,Sample Entity One,TYPE_A,REGION_NORTH,ACTIVE,150000,2024-01-01,2026-12-31,Primary example record,contact@example-one.com,true
+ENTITY_002,Sample Entity Two,TYPE_B,REGION_SOUTH,ACTIVE,220000,2024-02-15,2027-06-30,Secondary example record,contact@example-two.com,true
+ENTITY_003,Sample Entity Three,TYPE_A,REGION_EAST,PENDING,75000,2024-03-01,2025-12-31,Pending onboarding review,contact@example-three.com,true
+ENTITY_004,Sample Entity Four,TYPE_C,REGION_WEST,ACTIVE,480000,2023-11-01,2026-10-31,Western region example,contact@example-four.com,true
+ENTITY_005,Sample Entity Five,TYPE_D,REGION_CENTRAL,INACTIVE,30000,2022-01-01,2024-12-31,Inactive historical record,contact@example-five.com,false

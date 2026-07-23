@@ -1,0 +1,292 @@
+# config/tables/your_schema.sample_entity.yaml
+#
+# ONE file = ONE table.
+# Contains: table info + column definitions + validation rules.
+# Audit columns (version, inserted_by, inserted_at, updated_by, updated_at)
+# are NOT listed here — they come from config/defaults.yaml automatically.
+#
+# Deploy this file:
+#   python scripts/deploy_config.py --file config/tables/your_schema.sample_entity.yaml
+#
+# Deploy all tables:
+#   python scripts/deploy_config.py --all
+#
+# column_type options : text | number | date | timestamp | boolean | dropdown
+# rule types          : allowed_values | lookup | regex | min_length | max_length |
+#                       min_value | max_value | date_order | contains |
+#                       starts_with | ends_with | readonly_after_insert | required_if
+# on_fail options     : block (reject save) | warn (allow with warning)
+
+# ── Table level ─────────────────────────────────────────────────────────────
+
+table:
+  schema:         your_schema
+  name:           sample_entity
+  display_name:   Sample Entity
+  description:    >
+    Example reference table demonstrating all supported column types and
+    validation rules. Replace with your own table definition.
+  group:          General
+  primary_keys:   [record_id]
+  row_limit:      500
+  allow_insert:   true
+  allow_update:   true
+  allow_delete:   false           # soft delete only — sets is_active = FALSE
+  is_active:      true
+  catalog:        your_catalog
+  requires_approval:       false
+  approver_emails:         ""
+  approval_expiry_hours:   72
+  allow_overwrite:         true
+  max_staged_rows:         500
+  auto_apply_on_approve:   false
+
+# ── Columns + rules ─────────────────────────────────────────────────────────
+
+columns:
+
+  # ── Primary key ─────────────────────────────────────────────────────────────
+  - column_name:    record_id
+    order:          1
+    is_primary_key: true
+    visible:        true
+    editable:       false           # PK — shown but locked after insert
+    mandatory:      true
+    nullable:       false
+    default_value:  null
+    column_type:    text
+    is_filter:      true
+    is_active:      true
+    dropdown:       null
+    rules:
+      - type:       regex
+        pattern:    "^[A-Z0-9_]{3,30}$"
+        on_fail:    block
+        reason:     "Record ID format is invalid."
+        fix:        >
+          Use only uppercase letters, numbers and underscores,
+          between 3 and 30 characters. Example: ENTITY_001
+        is_active:  true
+
+  # ── Name ─────────────────────────────────────────────────────────────────────
+  - column_name:    name
+    order:          2
+    is_primary_key: false
+    visible:        true
+    editable:       true
+    mandatory:      true
+    nullable:       false
+    default_value:  null
+    column_type:    text
+    is_filter:      true
+    is_active:      true
+    dropdown:       null
+    rules:
+      - type:       min_length
+        value:      2
+        on_fail:    block
+        reason:     "Name is too short."
+        fix:        "Enter the full name — minimum 2 characters."
+        is_active:  true
+      - type:       max_length
+        value:      100
+        on_fail:    block
+        reason:     "Name exceeds the maximum allowed length."
+        fix:        "Shorten the name to 100 characters or less."
+        is_active:  true
+
+  # ── Type — fixed dropdown ──────────────────────────────────────────────────
+  - column_name:    entity_type
+    order:          3
+    is_primary_key: false
+    visible:        true
+    editable:       true
+    mandatory:      true
+    nullable:       false
+    default_value:  null
+    column_type:    dropdown
+    is_filter:      true
+    is_active:      true
+    dropdown:
+      type:         fixed
+      values:       [TYPE_A, TYPE_B, TYPE_C, TYPE_D]
+    rules:
+      - type:       allowed_values
+        on_fail:    block
+        reason:     "Entity type is not a recognised value."
+        fix:        "Select one of the allowed types from the dropdown."
+        is_active:  true
+
+  # ── Region — lookup dropdown from reference table ─────────────────────────
+  - column_name:    region_code
+    order:          4
+    is_primary_key: false
+    visible:        true
+    editable:       true
+    mandatory:      true
+    nullable:       false
+    default_value:  null
+    column_type:    dropdown
+    is_filter:      true
+    is_active:      true
+    dropdown:
+      type:         lookup              # values fetched live from a Delta table
+      schema:       your_schema
+      table:        ref_regions
+      value_column: region_code
+      label_column: region_name
+    rules:
+      - type:       lookup
+        on_fail:    block
+        reason:     "Region code does not exist in the reference table."
+        fix:        >
+          Select a valid region from the dropdown.
+          Contact the platform team if your region is missing.
+        is_active:  true
+
+  # ── Status — fixed dropdown with default ──────────────────────────────────
+  - column_name:    status
+    order:          5
+    is_primary_key: false
+    visible:        true
+    editable:       true
+    mandatory:      true
+    nullable:       false
+    default_value:  "ACTIVE"
+    column_type:    dropdown
+    is_filter:      true
+    is_active:      true
+    dropdown:
+      type:         fixed
+      values:       [ACTIVE, INACTIVE, PENDING, SUSPENDED]
+    rules:
+      - type:       allowed_values
+        on_fail:    block
+        reason:     "Status is not a recognised value."
+        fix:        "Select ACTIVE, INACTIVE, PENDING or SUSPENDED."
+        is_active:  true
+
+  # ── Value — numeric with range ───────────────────────────────────────────
+  - column_name:    contract_value
+    order:          6
+    is_primary_key: false
+    visible:        true
+    editable:       true
+    mandatory:      false
+    nullable:       true
+    default_value:  null
+    column_type:    number
+    is_filter:      false
+    is_active:      true
+    dropdown:       null
+    rules:
+      - type:       min_value
+        value:      0
+        on_fail:    block
+        reason:     "Value cannot be negative."
+        fix:        "Enter a value of 0 or greater."
+        is_active:  true
+      - type:       max_value
+        value:      999999999
+        on_fail:    warn
+        reason:     "Value seems unusually high."
+        fix:        "Verify the value is correct before saving."
+        is_active:  true
+
+  # ── Effective date — with date ordering rule ──────────────────────────────
+  - column_name:    effective_date
+    order:          7
+    is_primary_key: false
+    visible:        true
+    editable:       true
+    mandatory:      true
+    nullable:       false
+    default_value:  "{current_date}"
+    column_type:    date
+    is_filter:      false
+    is_active:      true
+    dropdown:       null
+    rules:
+      - type:           date_order
+        before_column:  term_date
+        on_fail:        block
+        reason:         "Effective date cannot be after the termination date."
+        fix:            "Set effective date to a date before the termination date."
+        is_active:      true
+
+  # ── Term date ────────────────────────────────────────────────────────────
+  - column_name:    term_date
+    order:          8
+    is_primary_key: false
+    visible:        true
+    editable:       true
+    mandatory:      false
+    nullable:       true
+    default_value:  null
+    column_type:    date
+    is_filter:      false
+    is_active:      true
+    dropdown:       null
+    rules:          []
+
+  # ── Notes — text with length cap ─────────────────────────────────────────
+  - column_name:    notes
+    order:          9
+    is_primary_key: false
+    visible:        true
+    editable:       true
+    mandatory:      false
+    nullable:       true
+    default_value:  null
+    column_type:    text
+    is_filter:      false
+    is_active:      true
+    dropdown:       null
+    rules:
+      - type:       max_length
+        value:      500
+        on_fail:    block
+        reason:     "Notes field exceeds 500 character limit."
+        fix:        "Shorten the notes to 500 characters or less."
+        is_active:  true
+
+  # ── Contact email — regex validation ─────────────────────────────────────
+  - column_name:    contact_email
+    order:          10
+    is_primary_key: false
+    visible:        true
+    editable:       true
+    mandatory:      false
+    nullable:       true
+    default_value:  null
+    column_type:    text
+    is_filter:      false
+    is_active:      true
+    dropdown:       null
+    rules:
+      - type:       regex
+        pattern:    "^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$"
+        on_fail:    block
+        reason:     "Email address is not valid."
+        fix:        "Enter a valid email address. Example: contact@example.com"
+        is_active:  true
+
+  # ── Active flag ───────────────────────────────────────────────────────────
+  - column_name:    is_active
+    order:          11
+    is_primary_key: false
+    visible:        true
+    editable:       true
+    mandatory:      true
+    nullable:       false
+    default_value:  "true"
+    column_type:    boolean
+    is_filter:      true
+    is_active:      true
+    dropdown:       null
+    rules:
+      - type:       allowed_values
+        on_fail:    block
+        reason:     "Active flag must be true or false."
+        fix:        "Select true to activate the record or false to deactivate."
+        is_active:  true
