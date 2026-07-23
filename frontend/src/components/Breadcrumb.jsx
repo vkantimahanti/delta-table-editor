@@ -24,7 +24,7 @@ export function buildBreadcrumbItems({
   tableLabel,
   activeTab,
 }) {
-  const items = [{ label: 'MDS', key: 'mds' }]
+  const items = [{ label: 'Delta Table Editor', key: 'app' }]
 
   if (activeSection === 'overview') {
     items.push({ label: SECTION_LABELS.overview, key: 'overview' })

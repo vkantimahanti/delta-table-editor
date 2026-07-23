@@ -85,7 +85,7 @@ def notify_approvers(
     """Queue approval alert (outbox) and log for operators."""
     diff_count = len((summary or {}).get("all_diffs") or [])
     rows_changing = (summary or {}).get("rows_with_changes") or (summary or {}).get("total_rows") or "?"
-    subject = f"[MDS] Approval required — {schema}.{table}"
+    subject = f"[Delta Table Editor] Approval required — {schema}.{table}"
     body = (
         f"Change request: {change_request_id}\n"
         f"Table: {schema}.{table}\n"

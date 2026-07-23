@@ -26,8 +26,8 @@ export default function Sidebar({
         </div>
         {!collapsed && (
           <div>
-            <div className={styles.brandTitle}>MDS</div>
-            <div className={styles.brandSub}>Managed Data Service</div>
+            <div className={styles.brandTitle}>Delta Editor</div>
+            <div className={styles.brandSub}>Databricks Apps</div>
           </div>
         )}
       </div>

@@ -1,8 +1,8 @@
 # Delta Table Editor
 
-> A production-grade, config-driven Delta table editor built on **Databricks Apps** —
-> FastAPI backend, React frontend, Unity Catalog per-user security, business rule engine,
-> bulk upload/export with approval workflow, and column-level audit trail.
+> Production-grade Delta table editor on **Databricks Apps** —
+> FastAPI + React + Unity Catalog per-user security +
+> business rule engine + approval workflow + audit trail.
 
 ---
 

@@ -1,0 +1,49 @@
+table:
+  schema: dmz
+  name: ref_products
+  display_name: Product Reference
+  primary_keys: [product_code]
+  group: General
+
+columns:
+  - column_name: product_code
+    column_type: text
+    is_primary_key: true
+    editable: false
+    mandatory: true
+
+  - column_name: product_name
+    column_type: text
+    mandatory: true
+    is_filter: true
+
+  - column_name: category
+    column_type: dropdown
+    mandatory: true
+    is_filter: true
+    dropdown:
+      type: fixed
+      values: [DRUG, MEDICAL, ADMIN]
+    rules:
+      - type: allowed_values
+        on_fail: block
+        reason: Invalid category.
+        fix: Select DRUG, MEDICAL, or ADMIN.
+
+  - column_name: unit_cost
+    column_type: number
+    rules:
+      - type: min_value
+        value: 0
+        on_fail: block
+        reason: Unit cost cannot be negative.
+        fix: Enter zero or a positive amount.
+
+  - column_name: notes
+    column_type: text
+    rules:
+      - type: max_length
+        value: 500
+        on_fail: block
+        reason: Notes too long.
+        fix: Limit notes to 500 characters.

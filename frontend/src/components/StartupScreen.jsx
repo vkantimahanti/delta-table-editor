@@ -11,7 +11,7 @@ export default function StartupScreen({ elapsed, statusMessage, showSlowWarning,
           <Database className={styles.icon} size={48} strokeWidth={1.5} />
         </div>
 
-        <h1 className={styles.heading}>Starting up MDS</h1>
+        <h1 className={styles.heading}>Starting Delta Table Editor</h1>
 
         <p className={styles.subtext}>
           Your data warehouse cluster is spinning up and this usually takes 3–5 minutes on first use today.

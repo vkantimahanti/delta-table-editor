@@ -18,9 +18,9 @@ node_modules/
 frontend/node_modules/
 agent-builder/node_modules/
 
-# Build output (commit static/ only if deploying from repo)
-# Uncomment if you build locally and commit:
-# !static/
+# Generated frontend build output
+# Run scripts/build_for_deploy.sh before deploying.
+static/
 
 # IDE
 .vscode/

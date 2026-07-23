@@ -240,7 +240,7 @@ def _eval_dependent_lookup(
     if val_lower in allowed_lower:
         return True, "", ""
 
-    # Legacy rows stored as "CARRIER    |    SUBCARRIER" (no mdssubcarriercode prefix)
+    # Legacy rows may store compound values as "PARENT    |    CHILD".
     legacy_allowed = {
         _strip_dependent_code_prefix(str(a)).lower() for a in allowed
     }
