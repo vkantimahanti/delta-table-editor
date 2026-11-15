@@ -3,9 +3,13 @@
 -- ============================================================
 -- Run this in a Databricks SQL editor or notebook ONCE.
 --
--- Before running:
---   Replace 'your_catalog' with your Unity Catalog name.
---   Replace 'your_schema' with your target schema (e.g. 'admin').
+-- Before running — replace ALL occurrences of:
+--   your_catalog  →  your Unity Catalog name  (e.g. main)
+--   your_schema   →  your config schema name  (e.g. admin)
+--
+-- Quick replace in VS Code:  Ctrl+H  →  Match Case  →  Replace All
+-- Quick replace on macOS:    sed -i '' 's/your_catalog/main/g; s/your_schema/admin/g' setup.sql
+-- Quick replace on Linux:    sed -i 's/your_catalog/main/g; s/your_schema/admin/g' setup.sql
 --
 -- After running:
 --   Deploy table configs:  python scripts/deploy_config.py --all
@@ -133,6 +137,18 @@ CREATE TABLE IF NOT EXISTS your_catalog.your_schema.dataeditor_change_requests (
     expires_at              TIMESTAMP COMMENT 'Pending request expiry',
     approval_token_hash     STRING    COMMENT 'Hashed token for email approval link'
 ) USING DELTA;
+
+-- ============================================================
+-- UC Volumes (required for bulk upload and export)
+-- ============================================================
+-- The app works in read-only / single-row edit mode without these.
+-- Create them before using bulk upload or streaming export.
+
+CREATE VOLUME IF NOT EXISTS
+    your_catalog.your_schema.dataeditor_staging;
+
+CREATE VOLUME IF NOT EXISTS
+    your_catalog.your_schema.dataeditor_exports;
 
 -- ============================================================
 -- Sample: onboard one table
