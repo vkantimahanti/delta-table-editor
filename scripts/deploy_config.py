@@ -1,13 +1,20 @@
 """
 deploy_config.py
-Reads YAML config files and MERGEs into three Delta tables:
+Reads YAML config files from config/tables/ and MERGEs into three Delta tables:
   - dataeditor_table_registry
   - dataeditor_column_config
   - dataeditor_business_rules
 
+Required environment variables (set in .env or export before running):
+  DATABRICKS_HOST        Workspace URL, e.g. https://adb-123.azuredatabricks.net
+  DATABRICKS_HTTP_PATH   SQL Warehouse HTTP path
+  DATABRICKS_TOKEN       Personal access token (local dev only)
+  TARGET_CATALOG         Unity Catalog name, e.g. main
+  TARGET_SCHEMA          Schema where dataeditor_* config tables live, e.g. admin
+
 Usage:
   # Deploy one table
-  python scripts/deploy_config.py --file config/tables/dmz.dash_test_carrier.yaml
+  python scripts/deploy_config.py --file config/tables/your_schema.sample_entity.yaml
 
   # Deploy all tables
   python scripts/deploy_config.py --all
@@ -36,6 +43,7 @@ logging.basicConfig(
 logger = logging.getLogger("deploy_config")
 
 CATALOG = os.environ.get("TARGET_CATALOG", "your_catalog")
+SCHEMA  = os.environ.get("TARGET_SCHEMA",  "your_schema")
 CONFIG_DIR = Path(__file__).parent.parent / "config"
 DEFAULTS_FILE = CONFIG_DIR / "defaults.yaml"
 
@@ -95,7 +103,8 @@ def get_connection():
     token = os.environ.get("DATABRICKS_TOKEN", "")
     if not hostname or not token:
         raise EnvironmentError(
-            "Set DATABRICKS_HOST, DATABRICKS_HTTP_PATH, DATABRICKS_TOKEN in .env"
+            "Set DATABRICKS_HOST, DATABRICKS_HTTP_PATH, DATABRICKS_TOKEN in .env\n"
+            "Also set TARGET_CATALOG and TARGET_SCHEMA to match your Unity Catalog setup."
         )
     return dbsql.connect(
         server_hostname=hostname,
@@ -244,7 +253,7 @@ def deploy(data: dict, conn, dry_run: bool = False):
     approval_expiry = int(tbl.get("approval_expiry_hours", REGISTRY_DEFAULTS["approval_expiry_hours"]))
 
     execute(conn, f"""
-        MERGE INTO {CATALOG}.dmz.dataeditor_table_registry AS target
+        MERGE INTO {CATALOG}.{SCHEMA}.dataeditor_table_registry AS target
         USING (SELECT
             '{schema}' AS schema_name,
             '{name}' AS table_name,
@@ -277,14 +286,14 @@ def deploy(data: dict, conn, dry_run: bool = False):
     # ── 2. Column config ──────────────────────────────────────────────────────
     # Delete existing columns for this table then re-insert (clean MERGE)
     execute(conn,
-        f"DELETE FROM {CATALOG}.dmz.dataeditor_column_config "
+        f"DELETE FROM {CATALOG}.{SCHEMA}.dataeditor_column_config "
         f"WHERE schema_name = '{schema}' AND table_name = '{name}'"
     )
     for col in all_columns:
         dd = col.get("dropdown")
         dd_json = json.dumps(dd) if dd else None
         execute(conn, f"""
-            INSERT INTO {CATALOG}.dmz.dataeditor_column_config
+            INSERT INTO {CATALOG}.{SCHEMA}.dataeditor_column_config
               (schema_name, table_name, column_name, col_order,
                is_primary_key, visible, editable, mandatory, nullable,
                default_value, column_type, dropdown_source, is_filter, is_active)
@@ -308,7 +317,7 @@ def deploy(data: dict, conn, dry_run: bool = False):
 
     # ── 3. Business rules ─────────────────────────────────────────────────────
     execute(conn,
-        f"DELETE FROM {CATALOG}.dmz.dataeditor_business_rules "
+        f"DELETE FROM {CATALOG}.{SCHEMA}.dataeditor_business_rules "
         f"WHERE schema_name = '{schema}' AND table_name = '{name}'"
     )
     rule_count = 0
@@ -327,7 +336,7 @@ def deploy(data: dict, conn, dry_run: bool = False):
                 params["dropdown_source"] = col["dropdown"]
 
             execute(conn, f"""
-                INSERT INTO {CATALOG}.dmz.dataeditor_business_rules
+                INSERT INTO {CATALOG}.{SCHEMA}.dataeditor_business_rules
                   (schema_name, table_name, column_name,
                    condition_type, condition_params,
                    on_fail, reason, fix,
