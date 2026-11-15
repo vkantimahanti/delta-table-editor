@@ -1,0 +1,35 @@
+# ============================================================
+# Delta Table Editor — Dev environment variables
+# ============================================================
+# Replace ALL placeholder values before deploying.
+# This file is committed — do NOT put secrets here.
+# Service principal IDs and warehouse IDs are not secrets;
+# they are resource identifiers in your Databricks workspace.
+# ============================================================
+
+variables:
+  # App Service Principal application (client) ID — dev SP
+  # Find in: Azure AD → App registrations → your dev SP → Application (client) ID
+  sp_application_id: "00000000-0000-0000-0000-000000000000"
+
+  # SQL Warehouse ID — dev warehouse
+  # Find in: Databricks → SQL Warehouses → your warehouse → Connection details → ID
+  warehouse_id: "0000000000000000"
+
+  # Unity Catalog name used in dev
+  target_catalog: "your_catalog"
+
+  # Schema where dataeditor_* config tables live
+  target_schema: "your_schema"
+
+  # App-level permissions — who can open the App URL in dev
+  # At minimum: your platform/admin group with CAN_MANAGE
+  # Analysts who need to test: add with CAN_USE
+  app_permissions:
+    - level: CAN_MANAGE
+      group_name: "your-platform-admins-group"
+    - level: CAN_USE
+      group_name: "your-dev-testers-group"
+    # Service principal must have CAN_MANAGE to manage the app process
+    - level: CAN_MANAGE
+      service_principal_name: "00000000-0000-0000-0000-000000000000"

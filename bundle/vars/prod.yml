@@ -1,0 +1,28 @@
+# ============================================================
+# Delta Table Editor — Production environment variables
+# ============================================================
+# Replace ALL placeholder values before deploying.
+# This file is committed — do NOT put secrets here.
+# ============================================================
+
+variables:
+  # App Service Principal application (client) ID — prod SP
+  sp_application_id: "00000000-0000-0000-0000-000000000000"
+
+  # SQL Warehouse ID — prod warehouse
+  warehouse_id: "0000000000000000"
+
+  # Unity Catalog name used in prod
+  target_catalog: "your_catalog"
+
+  # Schema where dataeditor_* config tables live
+  target_schema: "your_schema"
+
+  # App-level permissions — who can open the App URL in prod
+  app_permissions:
+    - level: CAN_MANAGE
+      group_name: "your-platform-admins-group"
+    - level: CAN_USE
+      group_name: "your-analysts-group"
+    - level: CAN_MANAGE
+      service_principal_name: "00000000-0000-0000-0000-000000000000"
