@@ -1,0 +1,130 @@
+# ============================================================
+# Delta Table Editor — Databricks Asset Bundle definition
+# ============================================================
+# Deploys the app to Databricks Apps with environment-specific
+# service principals, warehouse bindings, and permissions.
+#
+# Prerequisites:
+#   - Databricks CLI v0.212+  (databricks --version)
+#   - Bundle profile configured: databricks configure
+#
+# Deploy:
+#   databricks bundle deploy --target dev
+#   databricks bundle deploy --target prod
+#
+# After first deploy, run SQL permission scripts manually:
+#   scripts/sql/grant_app_service_principal_<env>.sql
+#   scripts/sql/grant_analyst_groups_<env>.sql
+# ============================================================
+
+bundle:
+  name: delta-table-editor
+
+variables:
+  # ── Set per environment in vars/<env>.yml ───────────────
+  sp_application_id:
+    description: "App Service Principal application (client) ID"
+  warehouse_id:
+    description: "SQL Warehouse ID bound to the app"
+  app_name:
+    description: "Databricks App resource name (must be unique per workspace)"
+  target_catalog:
+    description: "Unity Catalog name"
+  target_schema:
+    description: "Schema where dataeditor_* config tables live"
+  app_permissions:
+    description: "List of group/user permissions on the App object"
+
+resources:
+  apps:
+    delta-table-editor:
+      name: ${var.app_name}
+      description: "Config-driven Delta table editor with per-user Unity Catalog enforcement"
+
+      source_code_path: ../
+
+      config:
+        command:
+          - bash
+          - startup.sh
+
+        env:
+          - name: TARGET_CATALOG
+            value: ${var.target_catalog}
+
+          - name: TARGET_SCHEMA
+            value: ${var.target_schema}
+
+          - name: DATABRICKS_WAREHOUSE_ID
+            valueFrom: sql-warehouse
+
+          - name: SQL_EXECUTION_IDENTITY
+            value: hybrid
+
+          - name: APP_VERSION
+            value: "1.0.0"
+
+          - name: REQUEST_TIMEOUT_SECONDS
+            value: "300"
+
+          - name: MAX_UPLOAD_MB
+            value: "10"
+
+          - name: MAX_ROWS_DEFAULT
+            value: "500"
+
+          - name: MAX_ROWS_LIMIT
+            value: "10000"
+
+          - name: STAGING_VOLUME_PATH
+            value: "/Volumes/${var.target_catalog}/${var.target_schema}/dataeditor_staging"
+
+          - name: EXPORT_VOLUME_PATH
+            value: "/Volumes/${var.target_catalog}/${var.target_schema}/dataeditor_exports"
+
+          - name: STAGING_SCHEMA
+            value: ${var.target_schema}
+
+          - name: IDLE_AUTO_STOP
+            value: "true"
+
+          - name: IDLE_STOP_MINUTES
+            value: "10"
+
+      # ── OAuth scopes — users must grant consent on first login ──
+      user_api_scopes:
+        - sql
+        - catalog.catalogs:read
+        - catalog.schemas:read
+        - catalog.tables:read
+
+      # ── Warehouse binding ───────────────────────────────────────
+      resources:
+        - name: sql-warehouse
+          sql_warehouse:
+            id: ${var.warehouse_id}
+            permission: CAN_USE
+
+      # ── App-level access control ────────────────────────────────
+      # Users/groups must have CAN_USE here to open the App URL.
+      # In addition, they need Unity Catalog grants (see PERMISSIONS.md).
+      permissions: ${var.app_permissions}
+
+targets:
+  dev:
+    mode: development
+    variables:
+      app_name: delta-table-editor-dev
+      target_catalog: your_catalog
+      target_schema: your_schema
+    # Override with your dev values:
+    # databricks bundle deploy --target dev
+    # See vars/dev.yml for SP and warehouse IDs
+
+  prod:
+    mode: production
+    variables:
+      app_name: delta-table-editor
+      target_catalog: your_catalog
+      target_schema: your_schema
+    # See vars/prod.yml for SP and warehouse IDs
