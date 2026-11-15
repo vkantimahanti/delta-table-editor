@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-echo "=== Data Canvas startup ==="
+echo "=== Delta Table Editor startup ==="
 
 export PYTHONDONTWRITEBYTECODE=1
 export PYTHONUNBUFFERED=1
@@ -21,7 +21,7 @@ if echo "$APP_NAME" | grep -qiE "(dev|test|staging|local)"; then
     DEFAULT_WORKERS=2
 else
     DETECTED_ENV="prod"
-    DEFAULT_WORKERS=2
+    DEFAULT_WORKERS=4
 fi
 
 # WEB_CONCURRENCY in app.yaml or Databricks Apps UI
